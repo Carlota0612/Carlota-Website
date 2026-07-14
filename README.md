@@ -1,149 +1,45 @@
 # Carlota Ortiz Personal Website
 
-A modern, professional personal website for Carlota Ortiz. The site presents a concise professional story for a senior HR professional working with technology and research organisations, rather than a traditional online CV.
+Next.js 15, TypeScript, Sanity Studio, Sanity Visual Editing, and Render Web Service deployment.
 
-## Technology stack
-
-- Next.js
-- React
-- TypeScript
-- CSS Modules-free responsive CSS in `app/globals.css`
-- ESLint with Next.js rules
-- Render-ready standalone production output
-
-## Local installation
-
-Install dependencies:
+## Local development
 
 ```bash
-npm install
+yarn install
+yarn dev
 ```
 
-## Development command
+Open the public site at `http://localhost:3000` and the private Studio at `http://localhost:3000/studio`.
 
-Run the local development server:
+## Sanity setup
 
-```bash
-npm run dev
-```
+1. Create a Sanity account and project at sanity.io, choosing an empty/clean project.
+2. Find the project ID in the Sanity Manage dashboard under the project name or in **Project settings → API**.
+3. Create or confirm a `production` dataset in **Project settings → Datasets**.
+4. Create a server-side API token in **Project settings → API → Tokens** with Viewer permissions. Keep it secret; it is only used by Next.js server code for draft preview.
+5. Configure CORS in **Project settings → API → CORS origins**. Add `http://localhost:3000` for local development and the Render production URL. Allow credentials for Studio/Presentation preview.
+6. Copy `.env.example` to `.env.local` and fill in:
+   - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+   - `NEXT_PUBLIC_SANITY_DATASET=production`
+   - `SANITY_API_READ_TOKEN`
+   - `SANITY_STUDIO_PREVIEW_URL=http://localhost:3000` locally
+7. In Render, add the same environment variables. Set `SANITY_STUDIO_PREVIEW_URL` to the production site origin, for example `https://your-service.onrender.com`.
+8. Keep Render commands as:
+   - Build: `yarn install && yarn build`
+   - Start: `yarn start`
 
-Then open [http://localhost:3000](http://localhost:3000).
+## Editing content
 
-## Production build command
+1. Visit `/studio` and sign in with a Sanity account that has access to the project.
+2. Open **Site Settings**. This singleton controls identity, hero, about, what I do, expertise, experience, projects, education, beyond work, quote, contact, design settings, and section management.
+3. Edit fields and select **Publish** when ready. Draft changes are private until published.
+4. Open the Presentation tool in Studio to preview the website inside the editor. It enables Next.js Draft Mode through `/api/draft-mode/enable` so draft content can be previewed securely.
+5. Click editable content in Presentation to jump to the corresponding Studio field.
+6. Use **Theme Settings** to safely change colours and predefined style options. Colour values must be six-digit hex values.
+7. Use **Sections** to reorder navigation and page sections with drag and drop, change navigation labels, or hide sections. The hero always stays first.
 
-Create a production build:
+## Recovery and fallback
 
-```bash
-npm run build
-```
+The public homepage includes local fallback content. If Sanity is unavailable, misconfigured, or environment variables are absent, the homepage continues rendering from `content/site.ts`; Studio and draft preview require valid Sanity configuration.
 
-## Production start command
-
-Start the production server locally:
-
-```bash
-npm run start
-```
-
-The start script uses Render's `PORT` environment variable when it exists and falls back to port `3000`.
-
-## Render deployment
-
-Create a new Render **Web Service** connected to the GitHub repository.
-
-Recommended settings:
-
-- **Environment:** Node
-- **Build command:** `npm install && npm run build`
-- **Start command:** `npm run start`
-- **Node version:** 20 or newer
-
-No database, authentication service, paid API, or environment variable is required for the current website.
-
-## Deploying from GitHub to Render
-
-1. Push this repository to GitHub.
-2. In Render, choose **New +** and select **Web Service**.
-3. Connect the GitHub repository.
-4. Confirm the build command is `npm install && npm run build`.
-5. Confirm the start command is `npm run start`.
-6. Select a Node runtime using Node 20 or newer.
-7. Click **Create Web Service**.
-8. Render will build the Next.js app and deploy it automatically.
-9. Optional: enable automatic deploys so every push to the selected branch triggers a new deployment.
-
-## Connecting a custom domain on Render
-
-1. Open the deployed Render Web Service.
-2. Go to **Settings** and find **Custom Domains**.
-3. Add the custom domain, for example `carlotaortiz.com` or `www.carlotaortiz.com`.
-4. Follow Render's DNS instructions for the domain registrar.
-   - For an apex/root domain, add the DNS record Render provides.
-   - For a `www` subdomain, add the CNAME record Render provides.
-5. Wait for DNS propagation.
-6. Render will issue and renew the TLS certificate automatically once the DNS records are correct.
-
-## Updating website content
-
-Most editable content is centralised in:
-
-```text
-content/site.ts
-```
-
-Update that file to edit:
-
-- Navigation labels and section links
-- Hero text
-- My Story copy
-- What I Do questions
-- Expertise cards
-- Experience entries
-- Projects
-- Education
-- Beyond Work interests
-- Approach quote
-- Contact details
-
-Global metadata is in:
-
-```text
-app/layout.tsx
-```
-
-The main page structure is in:
-
-```text
-app/page.tsx
-```
-
-Global styling is in:
-
-```text
-app/globals.css
-```
-
-The favicon placeholder is in:
-
-```text
-public/favicon.svg
-```
-
-## Available scripts
-
-```bash
-npm run dev     # Start local development server
-npm run build   # Create a production build
-npm run start   # Start the production server
-npm run lint    # Run ESLint checks
-```
-
-## Deployment readiness checklist
-
-- No database is required.
-- No authentication is included.
-- No paid APIs are used.
-- External links are standard email, LinkedIn, and GitHub links.
-- The layout is responsive and keyboard accessible.
-- SEO and Open Graph metadata are configured.
-- The project is configured with `output: "standalone"` for Render deployment.
+Never commit `.env.local` or real Sanity tokens.

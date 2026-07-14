@@ -1,13 +1,14 @@
 :root {
-  --background: #f7f2ea;
-  --surface: #fffdf8;
+  --background: #FCFAFF;
+  --accent-dark: #432475;
+  --surface: #FFFFFF;
   --surface-strong: #ffffff;
-  --foreground: #1f2523;
-  --muted: #626a66;
-  --accent: #9b5a44;
-  --accent-soft: #ead5c9;
-  --line: rgba(31, 37, 35, 0.13);
-  --shadow: 0 24px 70px rgba(68, 52, 40, 0.13);
+  --foreground: #19171D;
+  --muted: #625D69;
+  --accent: #6D3CC4;
+  --accent-soft: #F4EFFE;
+  --line: rgba(67, 36, 117, 0.16);
+  --shadow: 0 18px 50px rgba(67, 36, 117, 0.08);
   --radius: 28px;
 }
 
@@ -17,9 +18,9 @@ body {
   margin: 0;
   color: var(--foreground);
   background:
-    radial-gradient(circle at 12% 0%, rgba(155, 90, 68, 0.18), transparent 30rem),
-    radial-gradient(circle at 90% 24%, rgba(71, 102, 96, 0.12), transparent 28rem),
-    linear-gradient(135deg, #fffaf2 0%, var(--background) 52%, #eee3d6 100%);
+    radial-gradient(circle at 10% -8%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 29rem),
+    radial-gradient(circle at 92% 16%, color-mix(in srgb, var(--accent-soft) 80%, transparent), transparent 30rem),
+    linear-gradient(135deg, var(--background) 0%, #ffffff 48%, var(--accent-soft) 100%);
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 body::selection { background: var(--accent-soft); }
@@ -30,8 +31,8 @@ p { color: var(--muted); font-size: 1.04rem; line-height: 1.75; }
 
 .siteHeader {
   position: sticky; top: 0; z-index: 20;
-  background: rgba(247, 242, 234, 0.78);
-  border-bottom: 1px solid rgba(31, 37, 35, 0.08);
+  background: rgba(252, 250, 255, 0.82);
+  border-bottom: 1px solid rgba(67, 36, 117, 0.10);
   backdrop-filter: blur(18px);
 }
 .nav { width: min(1160px, calc(100% - 2rem)); margin: 0 auto; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
@@ -43,10 +44,25 @@ p { color: var(--muted); font-size: 1.04rem; line-height: 1.75; }
 .menuButton span:not(.srOnly) { display: block; width: 1.3rem; height: 2px; margin: 4px; background: var(--foreground); }
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
+
+.hero { position: relative; isolation: isolate; }
+.hero::before { content: ""; position: absolute; inset: 2rem -2rem auto auto; width: min(42vw, 30rem); aspect-ratio: 1; border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); border-radius: 38% 62% 54% 46%; background: radial-gradient(circle, color-mix(in srgb, var(--accent) 13%, transparent), transparent 65%); filter: blur(1px); z-index: -1; }
+.hero::after { content: ""; position: absolute; inset: 8% auto auto -4%; width: 18rem; height: 18rem; background-image: linear-gradient(color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--accent) 12%, transparent) 1px, transparent 1px); background-size: 24px 24px; mask-image: radial-gradient(circle, black, transparent 72%); z-index: -1; }
+.heroEyebrow { color: var(--accent); font-size: clamp(1.15rem, 1.6vw, 1.4rem); font-weight: 750; letter-spacing: 0.055em; margin-bottom: .35rem; }
+.positioning { color: var(--accent-dark); font-size: clamp(.95rem, 1.25vw, 1.08rem); font-weight: 750; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 1.2rem; }
+.iconMark { display: inline-grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: 999px; background: var(--accent-soft); color: var(--accent-dark); font-weight: 900; margin-bottom: 1rem; }
+.theme-dark { --background: #19171D; --foreground: #FCFAFF; --muted: #DED1F5; --surface: #241A36; --line: rgba(244,239,254,.22); }
+.theme-lavender { --background: #F4EFFE; }
+.cards-minimal .profileCard, .cards-minimal .questionCard, .cards-minimal .expertiseCard, .cards-minimal .timelineItem, .cards-minimal .projectCard, .cards-minimal .educationItem, .cards-minimal .quoteSection, .cards-minimal .contactSection { box-shadow: none; background: transparent; }
+.cards-soft .profileCard, .cards-soft .questionCard, .cards-soft .expertiseCard, .cards-soft .timelineItem, .cards-soft .projectCard, .cards-soft .educationItem, .cards-soft .quoteSection, .cards-soft .contactSection { background: var(--accent-soft); border-color: transparent; }
+.corners-square { --radius: 8px; } .corners-rounded { --radius: 36px; }
+.hero-compact .hero { min-height: 72vh; } .hero-large .hero { min-height: calc(100vh - 76px); }
+.headings-clean h1, .headings-clean h2 { letter-spacing: -.035em; } .headings-bold h1, .headings-bold h2 { font-weight: 900; }
+
 .section { width: min(1160px, calc(100% - 2rem)); margin: 0 auto; padding: 6.5rem 0; }
 .hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; min-height: calc(100vh - 76px); padding-top: 4rem; }
-.eyebrow { color: var(--accent); font-size: 0.76rem; font-weight: 850; letter-spacing: 0.16em; margin-bottom: 1rem; text-transform: uppercase; }
-h1 { font-size: clamp(3.4rem, 8vw, 7.7rem); line-height: 0.94; letter-spacing: -0.075em; max-width: 980px; margin-bottom: 1.7rem; }
+.eyebrow { color: var(--accent); font-size: 0.78rem; font-weight: 850; letter-spacing: 0.17em; margin-bottom: 1rem; text-transform: uppercase; }
+h1 { font-size: clamp(3rem, 6.7vw, 6.35rem); line-height: 0.98; letter-spacing: -0.067em; max-width: 980px; margin-bottom: 1.7rem; }
 h2 { font-size: clamp(2rem, 4.2vw, 4.25rem); line-height: 1.02; letter-spacing: -0.06em; margin-bottom: 1.1rem; }
 h3 { font-size: 1.22rem; line-height: 1.2; letter-spacing: -0.035em; margin-bottom: 0.55rem; }
 .intro p { max-width: 780px; font-size: clamp(1.08rem, 1.6vw, 1.28rem); margin-bottom: 1rem; }
@@ -54,11 +70,11 @@ h3 { font-size: 1.22rem; line-height: 1.2; letter-spacing: -0.035em; margin-bott
 .button, .textLink, .contactLinks a, .contactLinks span { border-radius: 999px; font-weight: 800; padding: 0.9rem 1.15rem; }
 .button { border: 1px solid var(--line); transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease; }
 .button:hover, .button:focus-visible, .textLink:hover, .textLink:focus-visible, .contactLinks a:hover, .contactLinks a:focus-visible { transform: translateY(-2px); outline: 3px solid rgba(155, 90, 68, 0.28); outline-offset: 3px; }
-.primary { background: var(--foreground); color: #fffaf2; box-shadow: 0 16px 40px rgba(31,37,35,.18); }
+.primary { background: var(--accent-dark); color: #fff; box-shadow: 0 16px 40px rgba(31,37,35,.18); }
 .secondary { background: rgba(255,255,255,.62); }
 .profileCard, .questionCard, .expertiseCard, .timelineItem, .projectCard, .educationItem, .quoteSection, .contactSection { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255,253,248,.72); box-shadow: var(--shadow); }
 .profileCard { padding: clamp(1.5rem, 4vw, 2.5rem); display: grid; gap: 1rem; }
-.monogram { width: 6rem; height: 6rem; display: grid; place-items: center; border-radius: 1.7rem; background: linear-gradient(135deg, var(--accent), #d8a179); color: white; font-size: 2rem; font-weight: 900; letter-spacing: -0.08em; }
+.monogram { width: 6rem; height: 6rem; display: grid; place-items: center; border-radius: 1.7rem; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: white; font-size: 2rem; font-weight: 900; letter-spacing: -0.08em; }
 .cardLabel { color: var(--accent); font-weight: 850; margin-bottom: 0; }
 .profileCard strong { font-size: clamp(1.5rem, 3vw, 2.15rem); line-height: 1.08; letter-spacing: -0.055em; }
 .sectionIntro { max-width: 900px; margin-bottom: 2.2rem; }
@@ -86,7 +102,7 @@ h3 { font-size: 1.22rem; line-height: 1.2; letter-spacing: -0.035em; margin-bott
 .educationItem span { color: var(--accent); font-weight: 850; }
 .beyondSection { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .interestGrid { grid-template-columns: repeat(4, 1fr); }
-.interestGrid span { min-height: 118px; display: grid; place-items: center; text-align: center; padding: 1rem; border-radius: 50% 40% 48% 42%; background: linear-gradient(135deg, rgba(155,90,68,.14), rgba(255,255,255,.72)); color: var(--foreground); font-weight: 850; }
+.interestGrid span { min-height: 118px; display: grid; place-items: center; text-align: center; padding: 1rem; border-radius: 50% 40% 48% 42%; background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 13%, white), rgba(255,255,255,.72)); color: var(--foreground); font-weight: 850; }
 .quoteSection { padding: clamp(2rem, 6vw, 4.5rem); }
 blockquote { white-space: pre-line; font-size: clamp(2rem, 4vw, 4.5rem); line-height: 1.06; letter-spacing: -0.06em; margin-bottom: 0; }
 .contactSection { text-align: center; padding: clamp(2rem, 6vw, 4.2rem); margin-bottom: 3rem; }
